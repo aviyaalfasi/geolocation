@@ -1,0 +1,57 @@
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+
+const geoLocationSchema = new Schema({
+    location1: {
+        type: String,
+        required: true
+    },
+    location2: {
+        type: String,
+        required: true
+    },
+    distance: {
+        type: Number,
+        required: true
+    },
+    hits: {
+        type: Number
+    }
+}, {timestamps: true});
+
+geoLocationSchema.statics.add = async function(data) {
+    return this.create(data);
+};
+geoLocationSchema.statics.getAll = async function() {
+    result = await this.find();
+    console.log(result[0].price);
+    return this.find();
+};
+geoLocationSchema.statics.getByLocations = async function(location1, location2) {
+    this.update( {location1: location1, location2: location2}, {$inc: {"hits":1}});
+    return  this.findOne({
+        location1:location1, location2:location2
+    });
+
+};
+geoLocationSchema.statics.addNewPair = async function (newPair) {
+    let found = this.countDocuments({location1: newPair.location1, location2: newPair.location2}, { limit: 1 })
+    if ( found == 1)  
+        return this.updateOne( {location1: newPair.location1, location2: newPair.location2}, newPair);
+
+    found = this.countDocuments({location1: newPair.location2, location2: newPair.location1}, { limit: 1 })
+    if (found == 0)
+        return this.updateOne( {location1: newPair.location2, location2: newPair.location1}, newPair);
+
+    return this.save(newPair);
+};  
+
+geoLocationSchema.statics.getMostPopularSearch = async function() {
+    return this.find().sort({"hits":-1}).limit(1);
+};
+
+geoLocationSchema.statics.updateOne = async function(location1, location2) {
+    return this.updateOne();
+};
+
+module.exports = mongoose.model('geoLocations', geoLocationSchema)
