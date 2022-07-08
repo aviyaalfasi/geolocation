@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
-// var  Api= require('../controller/PopularSearch');
-// var api = new Api().getInstance();
-var api = require("../model/geoLocations")
+var  Api= require('../controller/PopularSearch');
+var api = new Api().getInstance();
+//var api = require("../model/geoLocations")
 
 router.get('/', async function(req, res) {
     

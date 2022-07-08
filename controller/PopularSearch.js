@@ -5,7 +5,6 @@ class PopularSearch{
         var result;
         try {
             result = geoLocations.getMostPopularSearch(location1, location2);
-            console.log("result ---> ", result)
             return result;
         }
         catch (err) {console.log(`failed ${err}`)};

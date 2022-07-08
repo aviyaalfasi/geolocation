@@ -10,3 +10,7 @@ router.post("/",  async function(req, res){
     };
     await api.addNewPair(newPair);
 });
+router.get('/', async function(req, res) {
+     api.getDistance(req.body.source, req.body.destination);
+     res.sendStatus(201);
+ });

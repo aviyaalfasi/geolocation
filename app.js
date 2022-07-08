@@ -3,7 +3,7 @@ require("dotenv").config();
 const  mongoose  = require('mongoose');
 
 const helloRouter = require('./routes/hello');
-const geoDistanceRouter = require('./routes/geoDistance');
+const geoDistanceRouter = require('./routes/distance');
 const popularSearchRouter = require('./routes/popularSearch');
 const healthRouter = require("./routes/health")
 
@@ -15,7 +15,7 @@ const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, {useNewUrlParser: true});
 const c = mongoose.connection;
 c.once('open', () => {
-    console.log("Connected to db");
+    console.log("Connected to db;)");
 });
 
 app.use('/hello', helloRouter);
